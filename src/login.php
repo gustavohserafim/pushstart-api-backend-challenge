@@ -1,14 +1,14 @@
 <?php
-include 'conexao/db_connect.php'; #Conecta com o banco de dados
-$metodo = $_SERVER['REQUEST_METHOD']; #Define o metodo da requisição
-#header('Content-Type: application/json; charset=UTF-8');
+require_once 'conexao/db_connect.php'; #Conecta com o banco de dados
+require_once 'logar.php'; #Conecta com o banco de dados
 
-#Função que autenticado o usuário
-function autenticar($conexao, $usuario_email, $usuario_senha){
+$metodo = $_SERVER['REQUEST_METHOD']; #Define o metodo da requisição
+
+#Função que autentica o usuário
+function autenticar($connection, $usuario_email, $usuario_senha){
     $query = "select email, senha from usuarios where email='{$usuario_email}' and senha='{$usuario_senha}'";
-    $resultado = mysqli_query($conexao, $query);
+    $resultado = mysqli_query($connection, $query);
     $usuario = mysqli_fetch_assoc($resultado);
-    #var_dump($usuario);
     return $usuario;
 }
 
@@ -16,18 +16,20 @@ if ($metodo === 'POST'){
     $dados_json = json_decode(file_get_contents('php://input'));
     $usuario_email = $dados_json->email;
     $usuario_senha = $dados_json->senha;
-
-    $logar = autenticar($conexao, $usuario_email, $usuario_senha);
+    $logar = autenticar($connection, $usuario_email, $usuario_senha);
 
     if ($logar === null){
+        header('Content-Type: application/json');
         echo json_encode(['Erro'=>'Email ou senha incorreto!']);
         die();
     }else{
-        setcookie("usuario_logado", $usuario_email);
+        $_SESSION["success"] = "Usuário logado com sucesso.";
+        logaUsuario($usuario_email);
+        header('Location: perfil.php');
     }
 
 }else{
-    
     die();
 }
+
 

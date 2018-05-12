@@ -1,3 +1,3 @@
 <?php
 
-$conexao = mysqli_connect('localhost','root', '', 'api');
+$connection = mysqli_connect('localhost','root', '', 'api');
