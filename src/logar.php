@@ -9,7 +9,7 @@ function verificaUsuario() {
     if(!usuarioEstaLogado()) {
         $_SESSION["danger"] = "Você não tem acesso a esta funcionalidade.";
         header('Content-Type: application/json');
-        json_encode(['Erro'=>'Você não está logado.']);
+        echo json_encode(['Erro'=>'Você não está logado.']);
         die();
     }
 }
