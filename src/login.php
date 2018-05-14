@@ -1,6 +1,6 @@
 <?php
 require_once 'conexao/db_connect.php'; #Conecta com o banco de dados
-require_once 'logar.php'; #Conecta com o banco de dados
+require_once 'logar.php';
 
 $metodo = $_SERVER['REQUEST_METHOD']; #Define o metodo da requisição
 
@@ -20,12 +20,12 @@ if ($metodo === 'POST'){
 
     if ($logar === null){
         header('Content-Type: application/json');
-        echo json_encode(['Erro'=>'Email ou senha incorreto!']);
+        echo json_encode(['Mensagem'=>'Email ou senha incorreto!']);
         die();
     }else{
         $_SESSION["success"] = "Usuário logado com sucesso.";
         logaUsuario($usuario_email);
-        header('Location: perfil.php');
+        #header('Location: perfil.php');
     }
 
 }else{

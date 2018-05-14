@@ -27,7 +27,7 @@ if($metodo === 'GET'){
 
 }elseif ($metodo === 'POST') {
     $foto = file_get_contents('php://input');
-
+    file_put_contents(foto, $foto);
 
 
 }elseif ($metodo === 'DELETE'){
