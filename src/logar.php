@@ -1,15 +1,15 @@
 <?php
 session_start();
-#Verifica se o usuario já está logado
-function usuarioEstaLogado() {
+function usuarioEstaLogado() { #Verifica se o usuario já está logado
+
     return isset($_SESSION["usuario_logado"]);
 }
 
 function verificaUsuario() {
     if(!usuarioEstaLogado()) {
-        $_SESSION["danger"] = "Você não tem acesso a esta funcionalidade.";
+        $_SESSION["danger"] = "Voce nao esta logado.";
         header('Content-Type: application/json');
-        echo json_encode(['Mensagem'=>'Você não está logado.']);
+        echo json_encode(['Mensagem'=>'Voce nao esta logado.']);
         die();
     }
 }
