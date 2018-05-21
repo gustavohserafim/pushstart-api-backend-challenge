@@ -1,4 +1,4 @@
-PHP Back end challenge por Gustavo Serafim
+﻿PHP Back end challenge por Gustavo Serafim
 Desenvolvido e testado com XAMPP
 PHP v.7.2.4 - Sem nenhum framework
 
