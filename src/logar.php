@@ -1,7 +1,8 @@
 <?php
-session_start();
-function usuarioEstaLogado() { #Verifica se o usuario já está logado
 
+session_start();
+
+function usuarioEstaLogado() { #Verifica se o usuario já está logado
     return isset($_SESSION["usuario_logado"]);
 }
 
@@ -18,8 +19,8 @@ function usuarioLogado() {
     return $_SESSION["usuario_logado"];
 }
 
-function logaUsuario($usuario_email) {
-    $_SESSION["usuario_logado"] = $usuario_email;
+function logaUsuario($id) {
+    $_SESSION["usuario_logado"] = $id;
 }
 
 #Faz logout apagando a sessão

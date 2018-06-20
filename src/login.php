@@ -1,22 +1,26 @@
 <?php
-require_once 'db_connect.php'; #Conecta com o banco de dados
+
+require_once 'Database.php'; #Conecta com o banco de dados
 require_once 'logar.php'; #Importa as funções de autenticação
 
-$metodo = $_SERVER['REQUEST_METHOD']; #Pega o metodo da requisição
+class Login{
+    public static function logar($connection ,$usuario_email, $usuario_senha){
+        $statement = $connection->prepare("select id, email, senha from usuarios where email= ? and senha= ?");
+        $statement->bindValue(1, $usuario_email);
+        $statement->bindValue(2, $usuario_senha);
+        $statement->execute();
+        $usuario = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $usuario;
+    }
 
-#Função que autentica o usuário
-function autenticar($connection, $usuario_email, $usuario_senha){
-    $query = "select email, senha from usuarios where email='{$usuario_email}' and senha='{$usuario_senha}'";
-    $resultado = mysqli_query($connection, $query);
-    $usuario = mysqli_fetch_assoc($resultado);
-    return $usuario;
-}
-
-if ($metodo === 'POST'){ #Verifica se o método da requisição é POST. se não a app morre.
+};
+/*
+if ($_SERVER['REQUEST_METHOD'] === 'POST'){ #Verifica se o método da requisição é POST. se não a app morre.
     $dados_json = json_decode(file_get_contents('php://input'));
     $usuario_email = $dados_json->email;
     $usuario_senha = $dados_json->senha;
-    $logar = autenticar($connection, $usuario_email, $usuario_senha);
+    #$logar = logar($connection, $usuario_email, $usuario_senha);
+    $logar = Login::logar(Database::conectar(), $usuario_email, $usuario_senha);
 
     if ($logar === null){ # Se a função de autenticação retornar nulo, a API informa usuário ou senha incorreto em JSON
         header('Content-Type: application/json');
@@ -24,12 +28,12 @@ if ($metodo === 'POST'){ #Verifica se o método da requisição é POST. se não
         die();
     }else{ # Se não for nulo,
         $_SESSION["success"] = "Usuário logado com sucesso.";
-        logaUsuario($usuario_email);
+        #var_dump($logar->id);
+        logaUsuario($logar[0]['id']);
         header('Location: perfil.php');
     }
 
 }else{
     die();
 }
-
-
+*/
